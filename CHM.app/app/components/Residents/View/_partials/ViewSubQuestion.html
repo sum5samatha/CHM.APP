@@ -1,0 +1,23 @@
+﻿<div ng-if="objSubQuestion.AnswerText">
+    <label class="col-sm-9">{{::objSubQuestion.Question}}</label>
+    <div class="col-sm-3 form-control-as-label">
+        <div ng-if="!objSubQuestion.ChosenAnswer">
+            {{::objSubQuestion.AnswerText}}
+        </div>
+        <div ng-if="objSubQuestion.ChosenAnswer">
+            <a target="_blank" href="{{RootUrl + objSubQuestion.ChosenAnswer}}">{{::objSubQuestion.AnswerText}}</a>
+        </div>
+    </div>
+    <div ng-if="objSubQuestion.MinScore==null" ng-repeat="objSection_Question_Answer in ::objSubQuestion.Sections_Questions_Answers| orderBy: 'DisplayOrder'">
+        <div ng-if="objSection_Question_Answer.childQuestion">
+            <div ng-repeat="objSubQuestion in ::objSection_Question_Answer.childQuestion" view-subquestion>
+            </div>
+        </div>
+    </div>
+    <div ng-if="objSubQuestion.MinScore!=null">
+        <div ng-if="objSubQuestion.childQuestion">
+            <div ng-repeat="objSubQuestion in ::objSubQuestion.childQuestion| orderBy: 'DisplayOrder'" view-subquestion>
+            </div>
+        </div>
+    </div>
+</div>

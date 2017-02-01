@@ -1,0 +1,13 @@
+<h4>
+    <i class="fa fa-book"></i> Resident Documents Sync
+</h4>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+        <label for="ddlResident" class="col-sm-3 control-label">Resident</label>
+        <div class="col-sm-9">
+            <select id="ddlResident" class="form-control" ng-options='objResidents.ID as (objResidents.FirstName + "" + objResidents.LastName ) for objResidents in  vm.Residents' ng-model="vm.ResidentIDs">
+                <option value=''>Select</option>
+            </select>
+        </div>
+    </div>
+</div>

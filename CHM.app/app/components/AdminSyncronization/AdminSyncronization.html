@@ -1,0 +1,23 @@
+<h4>
+    <i class="fa fa-book"></i> Syncronize Organization
+</h4>
+<form class="form-horizontal">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">        
+           
+                <label for="ddlOrganization" class="col-sm-3 control-label">Organization</label>
+                <div class="col-sm-9">
+                    <select id="ddlOrganization" class="form-control" ng-options="objOrganization.ID as objOrganization.Name for objOrganization in vm.organizations" ng-model="vm.OrganizationID">
+                        <option value=''>Select</option>
+                    </select>
+                </div>         
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+           
+                <button  type="button" class="btnSyncronize btn btn-primary pull-right" ng-show="vm.online" ng-click="vm.SyncOrganization(vm.OrganizationID)">Syncronize</button>
+            
+        </div>
+    </div>
+</form>

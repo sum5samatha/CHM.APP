@@ -1,0 +1,212 @@
+<style type="text/css">
+    svg {
+        width: 498px !important;
+        height: 98px !important;
+    }
+</style>
+<h4>
+    <i class="fa fa-user"></i> View Resident - {{vm.Resident.FirstName}} {{vm.Resident.LastName}} <a ng-hide="vm.IsSecondaryReadonly" ui-sref="EditResident({ResidentId:'{{vm.ResidentId}}'})"><i class="fa fa-edit"></i></a>
+</h4>
+
+<uib-accordion close-others="vm.OpenOnlyOneSection" class="">
+    <uib-accordion-group is-open="vm.PersonalInformation.open">
+        <uib-accordion-heading>
+            <div class="">
+                Personal Information
+                <i class="pull-right fa" ng-class="{'fa-chevron-circle-down': vm.PersonalInformation.open, 'fa-chevron-circle-right': !vm.PersonalInformation.open}"></i>
+            </div>
+        </uib-accordion-heading>
+        <form class="form-horizontal">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.FirstName}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Last Name</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.LastName}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Preferred to be called as</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.NickName}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Gender</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.Gender == 'M' ? 'Male' : 'Female'}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Photo</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        <img ng-src="{{RootUrl + vm.PhotoUrl}}" alt=" photo" class="img-responsive" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Date of Birth</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.DOB | date : DateFormat}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Telephone Number</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.Telephone}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Mobile Number</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.Mobile}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtGPAddress" class="col-sm-3 control-label">GP Address</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.GPDetails}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtNok" class="col-sm-3 control-label">Nok</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.Nok}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtNokTelephoneNumber" class="col-sm-3 control-label">Nok Telephone Number</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.NokTelephoneNumber}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtNokAddress" class="col-sm-3 control-label">Nok Address</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.NokAddress}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtNokPreferred" class="col-sm-3 control-label">Nok Preferred Contact Time</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.NokPreferred}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtSocialWorker" class="col-sm-3 control-label">Social Worker</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.SocialWorker}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtReasonForAdmission" class="col-sm-3 control-label">Reason For Admission</label>
+                    <div class="col-sm-9 form-control-as-label">
+                        {{vm.Resident.ReasonForAdmission}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </uib-accordion-group>
+    <uib-accordion-group is-open="status.open" ng-repeat="objSection in vm.OnlySection| orderBy : 'DisplayOrder'">
+        <uib-accordion-heading>
+            <div class="" ng-click="vm.ClickAccordianHeader(objSection)">
+                {{objSection.Name}}
+                <i class="pull-right fa" ng-class="{'fa-chevron-circle-down': status.open, 'fa-chevron-circle-right': !status.open}"></i>
+            </div>
+        </uib-accordion-heading>
+        <form class="form-horizontal">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-repeat="objSection_Question in objSection.Sections_Questions | orderBy: 'DisplayOrder'">
+                <div class="form-group">
+                    <!--<label class="col-sm-9">{{objSection_Question.Question}}</label>-->
+                    <!--<label class="col-sm-9">{{vm.BindSectionQuestion(objSection_Question.Question)}}</label>-->
+                    <label class="col-sm-9" ng-bind-html="vm.BindSectionQuestion(objSection_Question.Question,0)"></label>
+                    <div class="col-sm-3 form-control-as-label">
+                        <div ng-if="!objSection_Question.ChosenAnswer">
+                            {{vm.BindSectionQuestionAnswer(objSection_Question.AnswerText)}}
+                        </div>
+                        <div ng-if="objSection_Question.ChosenAnswer">
+                            <a target="_blank" href="{{RootUrl + objSection_Question.ChosenAnswer}}">{{vm.BindSectionQuestionAnswer(objSection_Question.AnswerText)}}</a>
+                        </div>
+                    </div>
+                    <div ng-if="objSection_Question.MinScore==null" ng-repeat="objSection_Question_Answer in objSection_Question.Sections_Questions_Answers| orderBy: 'DisplayOrder'">
+                        <div ng-if="objSection_Question_Answer.childQuestion">
+                            <div ng-repeat="objSubQuestion in objSection_Question_Answer.childQuestion | orderBy: 'DisplayOrder'" ng-include=" 'ViewSubQuestion' ">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="objSection_Question.MinScore!=null">
+                        <div ng-if="objSection_Question.childQuestion">
+                            <div ng-repeat="objSubQuestion in objSection_Question.childQuestion| orderBy: 'DisplayOrder'" ng-include="'ViewSubQuestion'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/ng-template" id="ViewSubQuestion">
+                <span ng-hide="true">{{$depth = $parent.$depth && $parent.$depth + 1 || 1}}</span>
+
+                <div ng-show="objSubQuestion.MinScore!=null?vm.ShowChildQuestionQuestion(objSubQuestion,$parent.$parent.$parent.$parent.$parent.$parent.$parent,$parent.$parent.$parent.$parent.$parent.$parent,$parent.$parent.$parent.$parent.$parent.objSubQuestion):(objSubQuestion.ParentAnswerID==$parent.$parent.$parent.$parent.objSection_Question.ChosenAnswerID||$parent.$parent.$parent.$parent.objSection_Question.MulChosenAnswerID.indexOf(objSubQuestion.ParentAnswerID)> -1 )||(objSubQuestion.ParentAnswerID==$parent.$parent.$parent.$parent.objSubQuestion.ChosenAnswerID || $parent.$parent.$parent.$parent.objSubQuestion.MulChosenAnswerID.indexOf(objSubQuestion.ParentAnswerID)> -1)||(objSubQuestion.ParentAnswerID==$parent.$parent.objSection_Question.ChosenAnswerID|| $parent.$parent.objSection_Question.MulChosenAnswerID.indexOf(objSubQuestion.ParentAnswerID)> -1 )||(objSubQuestion.ParentAnswerID==$parent.$parent.objSubQuestion.ChosenAnswerID || $parent.$parent.objSubQuestion.MulChosenAnswerID.indexOf(objSubQuestion.ParentAnswerID)> -1)">
+                    <!--<label class="col-sm-9">{{vm.BindSectionQuestion(objSubQuestion.Question)}}</label>-->
+                    <!--<label class="col-sm-9">{{objSubQuestion.Question}}</label>-->
+                    <label class="col-sm-9" ng-bind-html="vm.BindSectionQuestion(objSubQuestion.Question,$depth)"></label>
+                    <div class="col-sm-3 form-control-as-label">
+                        <div ng-if="!objSubQuestion.ChosenAnswer && !objSubQuestion.SignatureIcon">
+                            {{vm.BindSectionQuestionAnswer(objSubQuestion.AnswerText)}}
+                        </div>
+                      
+                      
+                        
+                        <div ng-if="objSubQuestion.ChosenAnswer">
+                            <a target="_blank" href="{{RootUrl + objSubQuestion.ChosenAnswer}}">{{vm.BindSectionQuestionAnswer(objSubQuestion.AnswerText)}}</a>
+                        </div>
+                    </div>
+                    <div ng-if="objSubQuestion.SignatureIcon" ng-bind-html="objSubQuestion.SignatureIcon"></div>
+                    <!--<div ng-if="objSubQuestion.MinScore==null" ng-repeat="objSection_Question_Answer in objSubQuestion.Sections_Questions_Answers| orderBy: 'DisplayOrder'">
+                        <div ng-if="objSection_Question_Answer.childQuestion">
+                            <div ng-repeat="objSubQuestion in objSection_Question_Answer.childQuestion | orderBy: 'DisplayOrder'" ng-include=" 'ViewSubQuestion' ">
+                            </div>
+                        </div>
+                    </div>-->
+                    <div ng-if="objSection_Question.MinScore==null">
+
+                        <div ng-repeat="objSubQuestionAnswer in objSubQuestion.Sections_Questions_Answers | orderBy: 'DisplayOrder'">
+                            <div ng-if="objSubQuestionAnswer.childQuestion && objSubQuestionAnswer.childQuestion.length > 0 ">
+                                {{objSubQuestion.childQuestion = null}}
+                                <div ng-repeat="objSubQuestion in objSubQuestionAnswer.childQuestion | orderBy: 'DisplayOrder' " ng-include=" 'ViewSubQuestion' ">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-if="objSubQuestion.childQuestion">
+
+                            <div ng-repeat="objSubQuestion in objSubQuestion.childQuestion| orderBy: 'DisplayOrder' " ng-include="'ViewSubQuestion'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="objSubQuestion.MinScore!=null">
+                        <div ng-if="objSubQuestion.childQuestion">
+                            <div ng-repeat="objSubQuestion in objSubQuestion.childQuestion| orderBy: 'DisplayOrder'" ng-include="'ViewSubQuestion'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+        </form>
+    </uib-accordion-group>
+</uib-accordion>
+
+
+<div class="row bottom10">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <a ng-disabled="!vm.ResidentId" ui-sref="RiskAssessmentSummary({ResidentId:'{{vm.ResidentId}}',EditMode:false})" class="btn btn-primary pull-right">
+            View Summary
+        </a>
+    </div>
+</div>
